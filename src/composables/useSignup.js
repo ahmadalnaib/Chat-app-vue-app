@@ -9,26 +9,21 @@ const signup = async (email, password, name) => {
   isPending.value = true;
 
   try {
-    const res = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const res = await createUserWithEmailAndPassword(auth, email, password);
     if (!res) {
       throw new Error('Could not complete the signup');
     }
-    console.log(res.user);
-    // const user = projectAuth.currentUser;
-    // await user.updateProfile({ displayName: name });
-
+    error.value = null;
+    isPending.value = false;
   } catch (err) {
+    console.log(err.message);
     error.value = err.message;
     isPending.value = false;
   }
 };
 
 const useSignup = () => {
-  return { error, signup };
+  return { error, isPending,signup };
 };
 
 export default useSignup;

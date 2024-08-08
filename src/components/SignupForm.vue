@@ -1,15 +1,25 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import useSignup from '../composables/useSignup';
 
-const { signup, error } = useSignup();
+
 
 const name = ref('');
 const email = ref('');
 const password = ref('');
 
+const { signup, error } = useSignup();
+
+const router=useRouter();
+
 const handleSubmit = async () => {
-  await signup(name.value, email.value, password.value);
+  await signup( email.value, password.value);
+  if(!error.value)
+{
+router.push('/')
+
+}
 };
 </script>
 
